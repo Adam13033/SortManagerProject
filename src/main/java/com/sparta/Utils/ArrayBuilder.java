@@ -1,15 +1,18 @@
-package com.sparta.utils;
+package com.sparta.Utils;
 
+import java.util.Arrays;
 import java.util.Random;
+
+import static com.sparta.Utils.DuplicateRemover.removeDuplicates;
 
 public class ArrayBuilder {
     public static int[] arrayBuilder(int index) {
         Random randNum = new Random();
-        int[] extensiveTest = new int[index];
+        int[] userTestArray = new int[index];
 
-        for (int i = 0; i < extensiveTest.length; i++) {
-            extensiveTest[i] = randNum.nextInt(10000);
+        for (int i = 0; i < userTestArray.length; i++) {
+            userTestArray[i] = randNum.nextInt(1000000);
         }
-        return DuplicateRemover.removeDuplicates(extensiveTest);
+        return userTestArray;
     }
 }

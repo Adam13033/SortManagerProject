@@ -1,31 +1,42 @@
-package com.sparta.SortManager;
+package com.sparta.Models;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static com.sparta.Utils.ArrayBuilder.arrayBuilder;
-import static org.junit.jupiter.api.Assertions.*;
 
 class TreeSortTest {
-    TreeSort treeTest = new TreeSort();
-    @Test
-    void sort() {
-        int[] test = arrayBuilder(100);
-        int[] treeArrTest = treeTest.sort(test);
-        for(int i = 0; i < test.length -1 ; i++) {
-            Assertions.assertEquals(treeArrTest[i] < treeArrTest[i + 1], treeArrTest[i] < treeArrTest[i + 1]);
+
+        TreeSort tSort = new TreeSort();
+        int[] testArr = arrayBuilder(20);
+        int[] sorted = tSort.sort(testArr);
+
+        @Test
+        @DisplayName("Testing to ensure correct sorting, smallest to largest")
+        void sort() {
+            for (int i = 0; i < testArr.length - 1; i++) {
+                Assertions.assertTrue(sorted[i] < sorted[i + 1]);
+            }
         }
-    }
 
-    @Test
-    void insert() {
-    }
+        @Test
+        @DisplayName("Testing return type, expecting int[] (true)")
+        void typeTest() {
+            Assertions.assertTrue(sorted instanceof int[]);
+        }
 
-    @Test
-    void inorder() {
-    }
+        @Test
+        @DisplayName("Ensuring correct sort order")
+        void testingArrayBounds() {
+            for (int i = 0; i < sorted.length - 1; i++) {
+                Assertions.assertTrue(sorted[i+1] > sorted[i]);
+            }
+        }
 
-    @Test
-    void display() {
-    }
+        @Test
+        @DisplayName("Not Null")
+        void testingInput() {
+            Assertions.assertNotNull(sorted, "Not null");
+        }
 }

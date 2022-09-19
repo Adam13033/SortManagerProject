@@ -1,30 +1,30 @@
-package com.sparta.SortManager;
+package com.sparta.Models;
+
+import com.sparta.Controller.Starter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
 import java.util.Date;
 
-public class TreeSort implements Sorter{
+public class TreeSort implements Sorter {
     Node root;
+    private static Logger logger = LogManager.getLogger(TreeSort.class);
 
     public int[] sort(int[] arr) {
-        try {
-            TreeSort tree = new TreeSort();
-            long start = new Date().getTime();
-            for (int i = 0; i < arr.length; i++) {
-                tree.insert(arr[i]);
+        if (arr != null) {
+            try {
+                TreeSort tree = new TreeSort();
+                logger.info("New TreeSort object created");
+                for (int i = 0; i < arr.length; i++) {
+                    tree.insert(arr[i]);
+                    logger.info(arr[i]);
+                }
+                System.out.println("Testing tree root" + tree.root.toString());
+                return tree.sortArray(tree.root);
+            } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
+                logger.warn(e.getMessage());
             }
-            long end = new Date().getTime();
-
-            int[] sortedArr = tree.inorder(tree.root);
-            System.out.println("Sorted ARR is: " + Arrays.toString(sortedArr));
-            System.out.println("Tree sorting Array took: " + (end - start) + "ms");
-            return tree.inorder(tree.root);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            System.out.println("");
-        } catch (ArrayIndexOutOfBoundsException e) {
-            e.printStackTrace();
-            System.out.println("Oops! Seems somethings wrong with out Array!");
         }
         return null;
     }
@@ -34,10 +34,9 @@ public class TreeSort implements Sorter{
     }
 
     void insert(int data) {
-        System.out.println("Inside insert method: " + data);
-
+        int count = 0;
         Node node = new Node(data);
-
+        System.out.println(count);
         if (root == null) root = node;
         else {
             Node traverse = root;
@@ -45,7 +44,7 @@ public class TreeSort implements Sorter{
             while (traverse != null) {
                 pretrav = traverse;
 
-                if (node.data < traverse.data) traverse = traverse.left;
+                if (node.data < traverse.data ) traverse = traverse.left;
                 else traverse = traverse.right;
             }
             if (node.data < pretrav.data) pretrav.left = node;
@@ -53,25 +52,29 @@ public class TreeSort implements Sorter{
         }
     }
 
-    int[] inorder(Node node) {
-        //if nothing, return array of size 0 to simplfy recursive step
+    public int[] sortArray(Node node) {
+        // if array is null, return an arr length of 0 to assist in recursive stages
         if (node == null) return new int[0];
 
         //compute arrays from either side
-        int[] left = inorder(node.left);
-        int[] right = inorder(node.right);
+        int[] left = sortArray(node.left);
+        int[] right = sortArray(node.right);
 
-        //make space for both arrays and the current node
-        int[] out = new int[right.length + left.length + 1];
-        int i = 0; //current index in out
+        // Creating a new array large enough to house left and right, as well as nodes.
+        int[] sortedArray = new int[right.length + left.length + 1];
+        // index in for loop
+        int i = 0;
 
         //copy left, add current node, copy right
-        for (int j = 0; j < left.length; j++)
-            out[i++] = left[j];
-        out[i++] = node.data;
-        for (int j = 0; j < right.length; j++)
-            out[i++] = right[j];
-        return out;
+        for (int j = 0; j < left.length; j++) {
+                sortedArray[i++] = left[j];
+        }
+            sortedArray[i++] = node.data;
+            for (int j = 0; j < right.length; j++) {
+
+                sortedArray[i++] = right[j];
+            }
+        return sortedArray;
     }
 }
 

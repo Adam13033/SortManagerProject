@@ -1,8 +1,10 @@
-package com.sparta.SortManager;
+package com.sparta.Models;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.InputMismatchException;
 
 import static com.sparta.Utils.ArrayBuilder.arrayBuilder;
 
@@ -14,9 +16,9 @@ class BubbleSorterTest {
     @Test
     @DisplayName("Testing to ensure correct sorting, smallest to largest")
     void sort() {
-       for(int i = 0; i < testArr.length -1; i++) {
-           Assertions.assertTrue(sorted[i] < sorted[i + 1]);
-       }
+        for (int i = 0; i < testArr.length - 1; i++) {
+            Assertions.assertTrue(sorted[i] < sorted[i + 1]);
+        }
     }
 
     @Test
@@ -25,9 +27,27 @@ class BubbleSorterTest {
         Assertions.assertTrue(sorted instanceof int[]);
     }
 
+
     @Test
-    @DisplayName("Passing null as param")
-    void nullInputTest() {
-        Assertions.assertNull(bsort.sort(null));
+    @DisplayName("Ensuring no out of bounds")
+    void testingArrayBounds() {
+        for (int i = 0; i < sorted.length - 1; i++) {
+            Assertions.assertTrue(sorted[i+1] > sorted[i]);
+        }
     }
- }
+
+    @Test
+    @DisplayName("Not Null")
+    void testingInput() {
+        Assertions.assertNotNull(sorted, "Not null");
+    }
+
+    @Test
+    @DisplayName("Throw NullPointerException when no array is provided")
+    public void throwNullPointerExceptionWhenNoArrPassed() {
+        Assertions.assertThrows(NullPointerException.class,
+                ()->{
+                    bsort.sort(null);
+                });
+    }
+}

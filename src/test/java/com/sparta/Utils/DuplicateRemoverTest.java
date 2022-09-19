@@ -1,11 +1,9 @@
-package com.sparta.utils;
+package com.sparta.Utils;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class DuplicateRemoverTest {
     DuplicateRemover testing = new DuplicateRemover();

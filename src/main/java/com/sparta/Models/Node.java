@@ -1,5 +1,4 @@
-package com.sparta.SortManager;
-
+package com.sparta.Models;
 
     class Node {
         int data;

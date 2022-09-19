@@ -1,29 +1,34 @@
-package com.sparta.SortManager;
+package com.sparta.Models;
+
+import com.sparta.Controller.Starter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
-import java.util.Date;
 
 public class BubbleSorter implements Sorter {
-    @Override
-    public int[] sort(int[] arr) {
-        if (arr != null) {
-            int placeHolder = 0;
-            long start = new Date().getTime();
-            for (int i = 0; i < arr.length; i++) {
-                for (int j = 1; j < (arr.length - i); j++) {
-                    if (arr[j - 1] > arr[j]) {
-                        placeHolder = arr[j - 1];
-                        arr[j - 1] = arr[j];
-                        arr[j] = placeHolder;
-                    }
-                }
+	private static Logger logger = LogManager.getLogger(BubbleSorter.class);
+
+	@Override
+	public int[] sort (int[] array) {
+		try {
+			if (array != null) {
+				int placeHolder = 0;
+				for (int i = 0; i < array.length; i++) {
+					for (int j = 1; j < (array.length - i); j++) {
+						if (array[j - 1] > array[j]) {
+							placeHolder = array[j - 1];
+							array[j - 1] = array[j];
+							array[j] = placeHolder;
+						}
+					}
+				}
             }
-            long end = new Date().getTime();
-            System.out.println("Bubble sorting Array took: " + (end - start) + "ms");
-        }
-        return Arrays
-                .stream(arr)
-                .distinct()
-                .toArray();
-    }
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
+			logger.error(e.getMessage(), e);
+			logger.trace(e.getMessage());
+		}
+
+        return array;
+	}
 }
